@@ -1,33 +1,37 @@
-buildscript {
-    ext.kotlin_version = '1.1.51'
-
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
-    }
-}
-
 group 'ro.jtonic.handson'
 version '0.1.0-SNAPSHOT'
 
 apply plugin: 'kotlin'
+apply plugin: "kotlin-spring"
 apply plugin: 'application'
 apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
-ext.junitJupiterVersion  = '5.0.1'
-ext.junitPlatformVersion = '1.0.1'
-ext.kotlinTest = "2.0.7"
-ext.log4jVersion = '2.9.0'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformGradlePluginVersion"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
+        classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPlugin"
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
+    compile("org.springframework.boot:spring-boot-starter")
+
+    testCompile("junit:junit:$junitVersion")
+    testRuntime("org.junit.vintage:junit-vintage-engine:$junitVintageVersion")
+
     testCompile "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
     testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
     testCompile "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
@@ -35,16 +39,16 @@ dependencies {
     testRuntime "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
     testCompile "io.kotlintest:kotlintest:$kotlinTest"
     // To use Log4J's LogManager
-    testRuntime("org.apache.logging.log4j:log4j-core:${log4jVersion}")
-    testRuntime("org.apache.logging.log4j:log4j-jul:${log4jVersion}")
+    testRuntime "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+    testRuntime "org.apache.logging.log4j:log4j-jul:${log4jVersion}"
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = jvmTarget
 }
 
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = jvmTarget
 }
 
 junitPlatform {
@@ -66,4 +70,20 @@ junitPlatform {
     logManager 'org.apache.logging.log4j.jul.LogManager'
 }
 
+test {
+    reports {
+        html.enabled = true
+        junitPlatformTest.enabled = true
+        junitXml.enabled = false
+    }
+}
+
 mainClassName = "ro.jtonic.handson.gradle.App"
+
+task('task 1') {
+    description = 'This is taks 1'
+
+    doLast {
+        println("junitVersion: $junitVersion")
+    }
+}
