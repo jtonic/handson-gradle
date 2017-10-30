@@ -67,7 +67,7 @@ junitPlatform {
     // configurationParameter 'junit.jupiter.conditions.deactivate', '*'
     // enableStandardTestTask true
     // reportsDir file('build/test-results/junit-platform') // this is the default
-    logManager 'org.apache.logging.log4j.jul.LogManager'
+    // logManager 'org.apache.logging.log4j.jul.LogManager'
 }
 
 test {
@@ -80,10 +80,35 @@ test {
 
 mainClassName = "ro.jtonic.handson.gradle.App"
 
-task('task 1') {
-    description = 'This is taks 1'
+task printVersions {
+    description = 'Printing version numbers'
+    group = "monitoring"
+
+    doFirst {
+        println("Project version: $version")
+    }
 
     doLast {
-        println("junitVersion: $junitVersion")
+        println("Junit version: $junitVersion")
     }
 }
+
+printVersions.doFirst {
+    println("Added action to printVersion.doFirst")
+}
+printVersions.doLast {
+    println("Added action to printVersion.doLast")
+    logger.quiet("Project version: $version")
+}
+
+compileTestKotlin {
+    println("=" * 80)
+    println("Kotlin tests have been successfully compiled")
+    println("=" * 80)
+}
+
+task afterPrintVersions {
+    logger.quiet("This depends on the task printlnVersions")
+}
+
+afterPrintVersions.dependsOn('printVersions')
