@@ -28,6 +28,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
     compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-aop")
 
     testCompile("junit:junit:$junitVersion")
     testRuntime("org.junit.vintage:junit-vintage-engine:$junitVintageVersion")
@@ -112,3 +113,11 @@ task afterPrintVersions {
 }
 
 afterPrintVersions.dependsOn('printVersions')
+
+task cleanUpResources {
+    logger.quiet("=" * 80)
+    logger.quiet("Cleaning up resources")
+    logger.quiet("=" * 80)
+}
+
+test.finalizedBy cleanUpResources
