@@ -12,7 +12,7 @@ class PrintingHandler {
 
     fun handle(msg: String = "not passed") {
         println("=" * 80)
-        println("$msg is handled...")
+        println("'$msg' is handled...")
         println("=" * 80)
     }
 }

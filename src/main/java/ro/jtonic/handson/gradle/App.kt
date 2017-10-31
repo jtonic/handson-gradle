@@ -35,7 +35,8 @@ class App {
         println("The hello world spring boot application is running")
         println("=" * 80)
 
-        printer.print("my message")
+        printer.print("Irina is the best beautiful girl in the world")
+        printer.print()
 
         logger.log("Antonel is the best")
     }

@@ -6,5 +6,5 @@ package ro.jtonic.handson.gradle.core
  */
 interface Printing {
 
-    fun print(msg: String)
+    fun print(msg: String? = null): String?
 }

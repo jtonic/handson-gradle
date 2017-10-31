@@ -1,5 +1,6 @@
 package ro.jtonic.handson.gradle.aspect
 
+import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.AfterReturning
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
@@ -19,19 +20,24 @@ class LoggingAspect {
     @Autowired
     private lateinit var handler: PrintingHandler
 
-    @Pointcut("execution (* ro.jtonic.handson.gradle.core.Printing.print(String)) && args(msg)")
-    fun pc1(msg: String) {}
+    @Pointcut("execution (* *..Printing.print(String)) && args(msg)")
+    fun pc1(msg: String?) {
+    }
 
     @Pointcut("within(@ro.jtonic.handson.gradle.aspect.annotation.Logging *)")
-    fun pc2() {}
+    fun pc2() {
+    }
 
     @Pointcut("execution(* *(String)) && args(msg)")
-    fun pc3(msg: String) {}
+    fun pc3(msg: String) {
+    }
 
-    @AfterReturning(pointcut = "pc1(msg)")
-    fun afterReturning1(msg: String) {
-        println("After successfully printed.")
-        handler.handle(msg)
+    @AfterReturning(pointcut = "pc1(msg)", returning = "returnValue")
+    fun afterReturning1(jp: JoinPoint, msg: String?, returnValue: Any?) {
+        println("After successfully printed '${msg ?: "no message"}'.")
+        returnValue?.let {
+            handler.handle(msg ?: "no value passed")
+        }
     }
 
     @AfterReturning(pointcut = "pc2() && pc3(msg)")
