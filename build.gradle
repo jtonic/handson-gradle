@@ -108,6 +108,13 @@ compileTestKotlin {
     println("=" * 80)
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = project.gradleVersion
+     distributionType =  Wrapper.DistributionType.ALL
+     distributionUrl = distributionUrl.replace("https", "http")
+    // distributionUrl =  https://myEnterpriseRepository:7070/gradle/distributions/gradle-2.3-bin.zip
+}
+
 task afterPrintVersions {
     logger.quiet("This depends on the task printlnVersions")
 }
