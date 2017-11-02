@@ -2,11 +2,12 @@ group 'ro.jtonic.handson'
 version '0.1.0-SNAPSHOT'
 
 apply plugin: 'kotlin'
-apply plugin: "kotlin-spring"
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.jetbrains.kotlin.plugin.noarg'
 apply plugin: 'application'
 apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+apply plugin: 'kotlin-noarg'
 
 buildscript {
     repositories {
@@ -14,6 +15,7 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion"
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformGradlePluginVersion"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
@@ -27,11 +29,12 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
-    compile("org.springframework.boot:spring-boot-starter")
-    compile("org.springframework.boot:spring-boot-starter-aop")
 
-    testCompile("junit:junit:$junitVersion")
-    testRuntime("org.junit.vintage:junit-vintage-engine:$junitVintageVersion")
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+    compile "org.springframework.boot:spring-boot-starter-aop"
+
+    testCompile "junit:junit:$junitVersion"
+    testRuntime "org.junit.vintage:junit-vintage-engine:$junitVintageVersion"
 
     testCompile "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
     testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
@@ -39,9 +42,18 @@ dependencies {
     // Only needed to run tests in an (IntelliJ) IDE(A) that bundles an older version
     testRuntime "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
     testCompile "io.kotlintest:kotlintest:$kotlinTest"
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+
     // To use Log4J's LogManager
-    testRuntime "org.apache.logging.log4j:log4j-core:${log4jVersion}"
-    testRuntime "org.apache.logging.log4j:log4j-jul:${log4jVersion}"
+    testRuntime "org.apache.logging.log4j:log4j-core:$log4jVersion"
+    testRuntime "org.apache.logging.log4j:log4j-jul:$log4jVersion"
+
+    testCompile "com.jayway.restassured:rest-assured:$restAssuredVersion"
+    compile group: 'com.jayway.restassured', name: 'json-schema-validator', version: restAssuredVersion
+}
+
+noArg {
+    annotation("ro.jtonic.handson.gradle.model.Dto")
 }
 
 compileKotlin {
