@@ -39,7 +39,7 @@ class RestAssuredJacksonTest {
     fun setUp() {
         RestAssuredConfig.config()
                 .objectMapperConfig(
-                        ObjectMapperConfig.objectMapperConfig().jackson2ObjectMapperFactory { cls, charset ->
+                        ObjectMapperConfig.objectMapperConfig().jackson2ObjectMapperFactory { _, _ ->
                             objectMapper
                         })
 

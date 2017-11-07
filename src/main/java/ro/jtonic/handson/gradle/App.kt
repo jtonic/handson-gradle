@@ -5,6 +5,7 @@ import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
+import ro.jtonic.handson.gradle.core.Library
 import ro.jtonic.handson.gradle.core.Logger
 import ro.jtonic.handson.gradle.core.Printing
 
@@ -20,6 +21,9 @@ class App {
 
     @Autowired
     private lateinit var logger: Logger
+
+    @Autowired
+    private lateinit var library: Library
 
     companion object {
 
@@ -39,6 +43,10 @@ class App {
         printer.print()
 
         logger.log("Antonel is the best")
+
+        library.borrow("The three musketeers")
+
+        println("Spring boot application was started")
     }
 }
 
