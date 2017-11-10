@@ -1,3 +1,5 @@
+import ro.jtonic.gradle.tasks.EchoTask
+
 group = 'ro.jtonic.handson'
 version = '0.1.0-SNAPSHOT'
 description = 'Gradle project for learning'
@@ -37,10 +39,7 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
     compile "org.springframework.boot:spring-boot-starter-aop"
 
-    compile group: 'com.github.thomasnield', name: 'rxkotlinfx', version: '2.2.0'
     compile group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.1.0'
-    compile group: 'no.tornado', name: 'tornadofx', version: '1.7.12'
-
 
     testCompile "junit:junit:$junitVersion"
     testRuntime "org.junit.vintage:junit-vintage-engine:$junitVintageVersion"
@@ -104,7 +103,7 @@ mainClassName = "ro.jtonic.handson.gradle.App"
 
 task printVersions {
     description = 'Printing version numbers'
-    group = "monitoring"
+    group = "tony"
 
     println "This is task $name configuration phase"
 
@@ -161,3 +160,18 @@ task cleanUpResources {
 }
 
 test.finalizedBy cleanUpResources
+
+
+// exercises
+task zipTask(type: Zip) {
+    group = "tony"
+    from "$projectDir/.idea"
+    destinationDir = file("$projectDir/destination")
+    archiveName = 'myzip.zip'
+    includes = ['modules.xml']
+}
+
+task echo(type: EchoTask) {
+    group = "tony"
+    message = "antonel"
+}

@@ -11,7 +11,7 @@ object RxJavaMain {
     @JvmStatic
     fun main(args: Array<String>) {
         val source = listOf("A", "B", "C").toObservable()
-                .filter { it == "B" }
+                .filter { it in setOf("A", "B") }
                 .subscribeBy(
                         onNext = { println(it) }
                 )

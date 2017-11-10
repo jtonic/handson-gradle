@@ -11,3 +11,23 @@
 Note: 
 1. I am investigating the benefits and drawbacks of gradle vs maven. I would like to have my next projects based on Gradle
 
+Gradle samples:
+
+- buildSrc 
+
+
+    https://github.com/gradle/gradle/tree/master/subprojects/docs/src/samples/multiProjectBuildSrc/buildSrc 
+    
+- further samples
+
+
+    https://github.com/gradle/gradle/tree/master/subprojects/docs/src/samples
+
+
+Next exercises:
+
+- delete folders in clean after clean task
+- simple plugins
+- create and use simple plugins
+- Typed tasks (in buildSrc) with input and output (and benefit from cache)
+- angular/node/bower project with gradle (migration of timesheet)
