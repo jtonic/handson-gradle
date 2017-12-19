@@ -4,9 +4,15 @@ subprojects {
     dependencies {
         compile localGroovy()
         compile gradleApi()
+        testCompile "junit:junit:$junitVersion"
+        testCompile "org.assertj:assertj-core:$assertjVersion"
     }
 
     rootProject.dependencies {
         runtime project(path)
     }
+}
+
+build.doLast {
+    logger.quiet("The buildScr project has been successfully built.")
 }

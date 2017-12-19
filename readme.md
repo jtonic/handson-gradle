@@ -27,7 +27,7 @@ Gradle samples:
 Next exercises:
 
 - delete folders in clean after clean task
-- simple plugins
 - create and use simple plugins
-- Typed tasks (in buildSrc) with input and output (and benefit from cache)
+- typed tasks (in buildSrc) with input and output (and benefit from cache)
 - angular/node/bower project with gradle (migration of timesheet)
+- tasks from local file
