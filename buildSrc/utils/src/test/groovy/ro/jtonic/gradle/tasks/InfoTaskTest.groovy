@@ -22,6 +22,7 @@ class InfoTaskTest {
         infoTask.prefix = "Gradle info:"
         infoTask.execute()
 
+        // assertion
         Assertions.assertThat(new File(outputFilePath)).exists()
     }
 }
