@@ -8,3 +8,8 @@ build/
 out/
 
 .idea_modules/
+
+.DS_Store
+destination/.DS_Store
+
+
