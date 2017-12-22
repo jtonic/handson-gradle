@@ -1,0 +1,29 @@
+class InfoPluginExtension {
+
+    String prefix = 'Running gradle'
+}
+
+class InfoPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+        def infoExt = project.extensions.create('theInfo', InfoPluginExtension)
+        project.tasks.create('information') {
+            group = 'tony'
+            doLast {
+                logger.quiet('=' * 80)
+                logger.quiet("$infoExt.prefix ===> $project.gradle.gradleVersion")
+                logger.quiet('=' * 80)
+            }
+        }
+    }
+}
+
+apply plugin: InfoPlugin
+
+theInfo.prefix = 'Gradle version'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
