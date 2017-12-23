@@ -17,10 +17,13 @@ apply plugin: 'maven-publish'
 
 apply from: 'gradle/plugins.gradle'
 apply plugin: GreetingPlugin
+apply plugin: 'details'
 
 buildscript {
     repositories {
-        mavenCentral()
+        maven {
+            url = 'file:../lib'
+        }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -29,17 +32,17 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
         classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPlugin"
         classpath "com.netflix.nebula:nebula-release-plugin:$nebulaReleasePlugin"
+        classpath "ro.jtonic.handson:handson-gradle-plugins:0.1.0-SNAPSHOT"
     }
+}
+
+details {
+    prefix = 'All details'
 }
 
 println "This is project configuration phase $name"
 
 greeting.name = "Liviu Pazargic"
-
-repositories {
-    jcenter()
-    mavenCentral()
-}
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
