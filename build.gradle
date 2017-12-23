@@ -1,6 +1,7 @@
 import org.ajoberstar.gradle.git.release.opinion.Strategies
 import ro.jtonic.gradle.tasks.GreetingPlugin
 import ro.jtonic.gradle.tasks.InfoTask
+import ro.jtonic.handson.gradle.tasks.JavaDetailsTask
 
 group = 'ro.jtonic.handson'
 version = '0.1.0-SNAPSHOT'
@@ -16,6 +17,8 @@ apply plugin: 'nebula.release'
 apply plugin: 'maven-publish'
 
 apply from: 'gradle/plugins.gradle'
+apply from: 'gradle/dependencies.gradle'
+apply from: 'gradle/tasks.gradle'
 apply plugin: GreetingPlugin
 apply plugin: 'details'
 
@@ -36,34 +39,13 @@ buildscript {
     }
 }
 
+mainClassName = "ro.jtonic.handson.gradle.App"
+
 details {
     prefix = 'All details'
 }
 
-println "This is project configuration phase $name"
-
 greeting.name = "Liviu Pazargic"
-
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
-
-    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-    compile "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
-
-    compile "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
-
-    testCompile "junit:junit:$junitVersion"
-
-    testCompile "io.kotlintest:kotlintest:$kotlinTest"
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
-
-    // To use Log4J's LogManager
-    testRuntime "org.apache.logging.log4j:log4j-core:$log4jVersion"
-    testRuntime "org.apache.logging.log4j:log4j-jul:$log4jVersion"
-
-    testCompile "com.jayway.restassured:rest-assured:$restAssuredVersion"
-    compile "com.jayway.restassured:json-schema-validator:$restAssuredVersion"
-}
 
 noArg {
     annotation("ro.jtonic.handson.gradle.model.Dto")
@@ -83,8 +65,6 @@ test {
         junitXml.enabled = false
     }
 }
-
-mainClassName = "ro.jtonic.handson.gradle.App"
 
 task printVersions {
     description = 'Printing version numbers'
@@ -160,7 +140,7 @@ task info(type: InfoTask) {
     output = file("$project.rootProject.buildDir/output.txt")
 }
 
-task 'java-details' (type: ro.jtonic.handson.gradle.tasks.JavaDetailsTask) {
+task 'java-details' (type: JavaDetailsTask) {
     prefix = 'Java details'
     group = 'tony'
 }

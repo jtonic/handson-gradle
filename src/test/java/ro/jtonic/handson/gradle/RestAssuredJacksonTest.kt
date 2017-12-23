@@ -23,7 +23,7 @@ import ro.jtonic.handson.gradle.model.User
  * @author Antonel Ernest Pazargic
  */
 @RunWith(SpringRunner::class)
-@SpringBootTest(classes = arrayOf(App::class), webEnvironment = RANDOM_PORT)
+@SpringBootTest(classes = [App::class], webEnvironment = RANDOM_PORT)
 class RestAssuredJacksonTest {
 
     @Autowired

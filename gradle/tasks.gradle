@@ -1,0 +1,5 @@
+
+task htmlDependencyReport(type: HtmlDependencyReportTask) {
+    group = 'help'
+    reports.html.setDestination(file("build/reports/project/dependencies"))
+}

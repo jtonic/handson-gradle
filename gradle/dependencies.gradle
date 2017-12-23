@@ -1,0 +1,20 @@
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
+    compile "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
+    testCompile "io.kotlintest:kotlintest:$kotlinTest"
+
+    testCompile "junit:junit:$junitVersion"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    compile ("org.springframework.boot:spring-boot-starter-web:$springBootVersion") {
+        exclude module : 'spring-boot-starter-logging'
+    }
+    compile ("org.springframework.boot:spring-boot-starter-aop:$springBootVersion") {
+        exclude module : 'spring-boot-starter-logging'
+    }
+
+    compile "org.springframework.boot:spring-boot-starter-log4j:$springBootStarterLog4jVersion"
+
+    testCompile "com.jayway.restassured:rest-assured:$restAssuredVersion"
+    testCompile "com.jayway.restassured:json-schema-validator:$restAssuredVersion"
+}
