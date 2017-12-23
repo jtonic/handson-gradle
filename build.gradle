@@ -160,6 +160,11 @@ task info(type: InfoTask) {
     output = file("$project.rootProject.buildDir/output.txt")
 }
 
+task 'java-details' (type: ro.jtonic.handson.gradle.tasks.JavaDetailsTask) {
+    prefix = 'Java details'
+    group = 'tony'
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
