@@ -17,7 +17,6 @@ apply plugin: 'nebula.release'
 apply plugin: 'maven-publish'
 
 apply from: 'gradle/plugins.gradle'
-apply from: 'gradle/dependencies.gradle'
 apply from: 'gradle/tasks.gradle'
 apply plugin: GreetingPlugin
 apply plugin: 'details'
@@ -40,6 +39,41 @@ buildscript {
 }
 
 mainClassName = "ro.jtonic.handson.gradle.App"
+
+println("=" * 80)
+configurations.each { println "configuration: $it.name" }
+
+
+sourceSets {
+    'integration-tests' {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-tests/java')
+        }
+        resources.srcDir file('src/integration-tests/resources')
+    }
+}
+
+configurations {
+    integrationTestsCompile.extendsFrom testCompile
+    integrationTestsRuntime.extendsFrom testRuntime
+}
+
+dependencies {
+    integrationTestsCompile 'org.assertj:assertj-core:3.0.0'
+}
+
+task integrationTest(type: Test) {
+    testClassesDirs = files(sourceSets.'integration-tests'.output)
+    classpath = sourceSets.'integration-tests'.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+check.dependsOn(integrationTest)
+integrationTest.mustRunAfter(test)
+
+apply from: 'gradle/dependencies.gradle'
 
 details {
     prefix = 'All details'
@@ -140,7 +174,7 @@ task info(type: InfoTask) {
     output = file("$project.rootProject.buildDir/output.txt")
 }
 
-task 'java-details' (type: JavaDetailsTask) {
+task 'java-details'(type: JavaDetailsTask) {
     prefix = 'Java details'
     group = 'tony'
 }
